@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Add location";
+}
+
+@model ShopCRM.Application.UseCases.Location.Commands.CreateLocationCommand
+
+<h2 class="mb-3">Add new location</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Address" class="form-label">Address</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    @if (ViewData.ModelState[""]?.Errors.Count > 0)
+    {
+        <div class="alert alert-danger mt-3">
+            @ViewData.ModelState[""].Errors[0].ErrorMessage
+        </div>
+    }
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Add location</button>
+        <a asp-controller="Location" asp-action="All" class="btn btn-secondary ms-2">Back to list</a>
+    </div>
+</form>

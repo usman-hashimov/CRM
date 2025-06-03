@@ -1,0 +1,46 @@
+﻿@model ShopCRM.Domain.Entities.ViewModels.SaleViewModel
+
+@{
+    ViewBag.Title = "Sale's details";
+}
+
+<h2 class="mb-3">Sale's details</h2>
+
+<div class="card">
+    <div class="card-header">
+        <h4><strong>Total: </strong>@Model.TotalAmount</h4>
+    </div>
+
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>Added by: </strong>@Model.SalesRepName @Model.SalesRepSurname
+            </li>
+            <li class="list-group-item">
+                <strong>Sale date: </strong>@Model.SaleDate
+            </li>
+            <li class="list-group-item">
+                <strong>Location: </strong>@Model.Location
+            </li>
+            <li class="list-group-item">
+                <strong>Items sold:</strong>
+                <ul class="list-group list-group-flush mt-3">
+                    @foreach (var si in Model.SaleItems)
+                    {
+                        <li class="list-group-item">
+                            <strong>@si.ProductName</strong>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Quantity: @si.Quantity</li>
+                                <li class="list-group-item">Total Amount: @si.TotalAmount</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-footer">
+        <a asp-controller="Sale" asp-action="All" class="btn btn-secondary">Back to list</a>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿@model ShopCRM.Domain.Entities.Models.ProductModel
+
+@{
+    ViewBag.Title = "Product details";
+}
+
+<h2 class="mb-3">Product's details</h2>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <h4 class="mb-0">Product: @Model.Name</h4>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Name:</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Price:</dt>
+            <dd class="col-sm-9">@Model.Price</dd>
+
+            <dt class="col-sm-3">Quantity:</dt>
+            <dd class="col-sm-9">@Model.StockQuantity</dd>
+
+            <dt class="col-sm-3">Category:</dt>
+            <dd class="col-sm-9">@Model.Category.Name</dd>
+
+            <dt class="col-sm-3">Sale history:</dt>
+            <dd class="col-sm-9">
+                @if (Model.SaleItems == null)
+                {
+                    <p class="mb-0">No sales yet.</p>
+                }
+                else
+                {
+                    @foreach (var si in Model.SaleItems)
+                    {
+                        <ul class="list-unstyled mb-3">
+                            <li><strong>Total amount: </strong>@si.TotalAmount</li>
+                            <li><strong>Quantity purchased: </strong>@si.Quantity</li>
+                        </ul>
+                    }
+                }
+            </dd>
+        </dl>
+    </div>
+
+    <div class="card-footer">
+        <a asp-controller="Product" asp-action="All" class="btn btn-secondary">Back to list</a>
+    </div>
+</div>

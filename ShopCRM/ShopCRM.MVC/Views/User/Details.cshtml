@@ -1,0 +1,49 @@
+﻿@model ShopCRM.Domain.Entities.Models.UserModel
+
+@{
+    ViewBag.Title = "User's details";
+}
+
+<h2 class="mb-3">User's details</h2>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-light">
+        <h4 class="mb-0"><strong>@Model.Name @Model.Surname</strong></h4>
+    </div>
+
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Email:</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Role:</dt>
+            <dd class="col-sm-9">@Model.Role</dd>
+
+            <dt class="col-sm-3">Location:</dt>
+            <dd class="col-sm-9">@Model.Location.Address</dd>
+        </dl>
+
+        @if (Model?.SalesRep?.Sales != null)
+        {
+            <h5 class="mt-4">Sales:</h5>
+            <ul class="list-group list-group-flush">
+                @foreach (var sale in Model.SalesRep.Sales)
+                {
+                    <li class="list-group-item">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-3">Total amount:</dt>
+                            <dd class="col-sm-9">@sale.TotalAmount</dd>
+
+                            <dt class="col-sm-3">Sale date:</dt>
+                            <dd class="col-sm-9">@sale.SaleDate</dd>
+                        </dl>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <div class="card-footer">
+        <a asp-controller="User" asp-action="AllUsers" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

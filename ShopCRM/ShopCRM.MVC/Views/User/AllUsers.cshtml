@@ -1,0 +1,76 @@
+﻿@model List<ShopCRM.Domain.Entities.ViewModels.UserViewModel>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h2>All Users</h2>
+
+<form method="get">
+    <div class="form-group">
+        <label for="role">Filter by Role:</label>
+        <select id="role" name="role" class="form-control" onchange="this.form.submit()">
+            <option value="all">All</option>
+            <option value="admin">Admin</option>
+            <option value="salesrep">Sales Representative</option>
+        </select>
+    </div>
+
+    <div class="form-group mt-3">
+        <div class="input-group">
+            <input type="text" id="search" name="search" class="form-control" placeholder="Search by name or surname" value="@Context.Request.Query["search"]" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="mt-3">
+    <a asp-controller="User" asp-action="Add" class="btn btn-primary">
+        Add user
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+            <path d="M16 19h6" />
+            <path d="M19 16v6" />
+            <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+        </svg>
+    </a>
+</div>
+
+<div class="row mt-3">
+    @foreach (var user in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@user.Name @user.Surname</h5>
+                    <p class="card-text">
+                        <strong>Role:</strong> @user.Role
+                    </p>
+                    <p class="card-text">
+                        <strong>Location:</strong> @user.Location
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a asp-controller="User" asp-action="Details" asp-route-Id="@user.Id" class="btn btn-sm btn-outline-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                    <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

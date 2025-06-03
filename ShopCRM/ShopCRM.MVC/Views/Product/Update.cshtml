@@ -1,0 +1,60 @@
+﻿@using MediatR
+@using ShopCRM.Application.UseCases.Category.Queries
+@inject IMediator Mediator
+@model ShopCRM.Application.UseCases.Product.Commands.UpdateProductCommand
+
+@{
+    ViewBag.Title = "Update product";
+
+    var categories = await Mediator.Send(new GetAllCategoriesQuery());
+}
+
+<h2 class="mb-3">Edit product</h2>
+
+@if (Model is null)
+{
+    <h3 class="text-danger">Product not found! 404.</h3>
+}
+else
+{
+    <form asp-action="Update" method="post" novalidate>
+        <input type="hidden" asp-for="ProductId" />
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Price" class="form-label">Price</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="StockQuantity" class="form-label">Quantity</label>
+            <input asp-for="StockQuantity" class="form-control" />
+            <span asp-validation-for="StockQuantity" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="CategoryId" class="form-label">Category</label>
+            <select asp-for="CategoryId" class="form-select" asp-items="@(new SelectList(categories, "Id", "Name"))">
+                <option value="">Select category</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        @if (ViewData.ModelState[""]?.Errors.Count > 0)
+        {
+            <div class="alert alert-danger mb-3">
+                @ViewData.ModelState[""].Errors[0].ErrorMessage
+            </div>
+        }
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Ok</button>
+            <a asp-controller="Product" asp-action="All" class="btn btn-secondary ms-2">Back to List</a>
+        </div>
+    </form>
+}

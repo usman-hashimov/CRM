@@ -1,0 +1,72 @@
+﻿@model ShopCRM.Application.UseCases.User.Commands.CreateUserCommand
+@using MediatR
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using ShopCRM.Application.UseCases.Location.Queries
+@using ShopCRM.Domain.Entities.Models
+@inject IMediator Mediator
+
+@{
+    ViewBag.Title = "Add New User";
+
+    // Assuming you have a method to retrieve locations using Mediator
+    var locationsTask = Mediator.Send(new GetAllLocationsQuery());
+    var locations = await locationsTask;
+}
+
+<h2>Add New User</h2>
+
+<form asp-action="Add" method="post" class="p-5 bg-light rounded-3">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Surname" class="form-label">Surname</label>
+        <input asp-for="Surname" class="form-control" />
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Role" class="form-label">Role</label>
+        <select asp-for="Role" class="form-select">
+            <option value="">Select Role</option>
+            <option value="Admin">Admin</option>
+            <option value="SalesRep">Sales Rep</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LocationId" class="form-label">Location</label>
+        <select asp-for="LocationId" class="form-select" asp-items="@(new SelectList(locations, "Id", "Address"))">
+            <option value="">Select Location</option>
+        </select>
+        <span asp-validation-for="LocationId" class="text-danger"></span>
+    </div>
+
+    @if (ViewData.ModelState[""]?.Errors.Count > 0)
+    {
+        <div class="alert alert-danger mt-3">
+            @ViewData.ModelState[""].Errors[0].ErrorMessage
+        </div>
+    }
+
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Add User</button>
+        <a asp-controller="User" asp-action="AllUsers" class="btn btn-secondary ms-3">Back to List</a>
+    </div>
+</form>
